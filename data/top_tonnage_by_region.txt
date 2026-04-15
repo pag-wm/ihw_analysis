@@ -1,0 +1,10 @@
+  industrial_region   | facility_count | total_tons_2024 
+----------------------+----------------+-----------------
+ Other/Rural Texas    |           2112 |    151840096.72
+ Houston Area         |           1174 |     86077923.65
+ Beaumont/Port Arthur |            147 |      5441788.01
+ Corpus Christi       |            106 |      1143876.83
+ DFW Metroplex        |            884 |       113133.15
+ Permian Basin        |            139 |        62557.75
+(6 rows)
+

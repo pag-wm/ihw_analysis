@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Waste Stream Prospectus | {{ site.swr_num_txt }}</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">WASTE STREAM REPOSITORY</div>
+            <div class="date">Q2 2026 MARKET REPORT</div>
+        </header>
+
+        <section class="hero">
+            <h1>Investment Prospectus: {{ site.facility_site_name }}</h1>
+            <p>Location: {{ site.phys_loc_desc_txt }}, {{ site.site_city_name }}</p>
+        </section>
+
+        <div class="grid">
+            <div class="card score-card">
+                <h3>Suitability Index</h3>
+                <div class="score-value">{{ score }}</div>
+                <p>Status: <span class="badge">Prime Target</span></p>
+            </div>
+            
+            <div class="esg-badge-container">
+                <div class="esg-icon">🌿</div>
+                <div class="esg-text">
+                    <h4>Annual Carbon Mitigation</h4>
+                    <div class="esg-stat">{{ co2_saved }} Tonnes CO₂e</div>
+                    <p style="margin: 5px 0 0 0; font-size: 0.85rem; opacity: 0.8;">
+                        Equivalent to removing <strong>{{ cars_removed }}</strong> passenger vehicles from Texas roads annually.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card roi-card">
+                <h3>Projected Annual Revenue</h3>
+                <div class="roi-value">{{ profit }}</div>
+                <p>Based on 2024 tonnage reporting</p>
+            </div>
+        </div>
+
+        <div class="card shed-card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3>Regional Feedstock Shed</h3>
+                <select onchange="location = this.value;" class="radius-selector">
+                    <option value="?radius=10" {% if current_radius == 10 %}selected{% endif %}>10 Miles</option>
+                    <option value="?radius=25" {% if current_radius == 25 %}selected{% endif %}>25 Miles</option>
+                    <option value="?radius=50" {% if current_radius == 50 %}selected{% endif %}>50 Miles</option>
+                    <option value="?radius=100" {% if current_radius == 100 %}selected{% endif %}>100 Miles</option>
+                </select>
+            </div>
+            
+            <div class="roi-value" style="color: var(--accent-blue);">{{ shed_volume }} Tons</div>
+            <p>Available within a {{ current_radius }}-mile radius</p>
+        </div>
+
+        <section class="top-generators">
+            <h3>Top Regional Feedstock Sources ({{ current_radius }} mi)</h3>
+            <table class="generator-table">
+                <thead>
+                    <tr>
+                        <th>Company Name</th>
+                        <th>Distance</th>
+                        <th>Annual Tonnage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for gen in top_generators %}
+                    <tr>
+                        <td>{{ gen.company_name }}</td>
+                        <td>{{ gen.distance }} Miles</td>
+                        <td style="color: var(--accent-blue); font-weight: bold;">{{ "{:,.1f}".format(gen.annual_tons) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <section class="details">
+            <h2>Site Logistics & Feedstock</h2>
+            <table>
+                <tr><td>SWR Number</td><td>{{ site.swr_num_txt }}</td></tr>
+                <tr><td>County</td><td>{{ site.site_county_name }}</td></tr>
+                <tr><td>EPA ID</td><td>{{ site.epa_id_num }}</td></tr>
+            </table>
+        </section>
+
+        <div class="gauge-container">
+            <h3>Investment Payback Velocity</h3>
+            <div class="gauge-track">
+                <div class="gauge-fill" style="width: {{ payback_percent }}%;"></div>
+                <div class="gauge-marker" style="left: 50%;"><span>Break Even</span></div>
+            </div>
+            <div class="gauge-labels">
+                <span>Year 0 (CAPEX)</span>
+                <span><strong>{{ payback_years }} Years</strong></span>
+                <span>Year 10 (Target)</span>
+            </div>
+        </div>
+
+        <div class="comp-metric">
+            <span>Market Saturation</span>
+            <strong style="color: {{ saturation_color }};">{{ saturation_level }}</strong>
+        </div>
+
+        <section class="market-comparison">
+            <h2>Market Comparison: Disposal vs. Recovery</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Scenario</th>
+                        <th>Method</th>
+                        <th>Unit Cost/Value</th>
+                        <th>Annual Impact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="negative">
+                        <td>Current Status Quo</td>
+                        <td>Hazardous Landfill</td>
+                        <td>-$68.00 / ton</td>
+                        <td>{{ current_disposal_cost }}</td>
+                    </tr>
+                    <tr class="positive">
+                        <td><strong>Proposed Method</strong></td>
+                        <td><strong>{{ tech_name }}</strong></td>
+                        <td><strong>+$820.00 / ton</strong></td>
+                        <td><strong>{{ projected_revenue }}</strong></td>
+                    </tr>
+                    <tr class="highlight">
+                        <td colspan="3"><strong>Total Annual Value Flip (ROI Opportunity)</strong></td>
+                        <td><strong>{{ total_value_flip }}</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <div class="footer-actions no-print">
+            <a href="/prospectus/{{ site.swr_num_txt }}/pdf?radius={{ current_radius }}" class="btn-pdf-footer">
+                📥 Download Investment Prospectus (PDF)
+            </a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+                reg_ent_name                | unique_waste_streams | total_pounds 
+--------------------------------------------+----------------------+--------------
+ STANDARD AERO SAN ANTONIO                  |                   92 |      1832652
+ ENTEGRIS                                   |                   70 |    8404288.9
+ SAMSUNG AUSTIN SEMICONDUCTOR               |                   55 |    228051285
+ GENERATIONAL PROPERTIES                    |                   41 |       179469
+ ARVIN SANGO                                |                   36 |     77860958
+ FUJIFILM DIOSYNTH BIOTECHNOLOGIES          |                   36 |      4557164
+ SOUTHWEST RESEARCH INSTITUTE               |                   33 |     93066400
+ TESLA                                      |                   32 |     91519319
+ THE BOEING SAN ANTONIO                     |                   31 |      2662680
+ SACHEM                                     |                   27 |       173203
+ AUSTIN FACILITY                            |                   27 |      3051906
+ WAL-MART RETURNS CENTER 9153               |                   25 |       298812
+ HEARNE MAINTENANCE FACILITY                |                   25 |     52356544
+ DPT LABORATORIES BROOKS CITY BASE FACILITY |                   24 |      2501331
+ CFAN                                       |                   23 |       591706
+(15 rows)
+

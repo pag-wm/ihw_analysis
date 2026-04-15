@@ -1,0 +1,1 @@
+SELECT count(1) from nor_facilities;

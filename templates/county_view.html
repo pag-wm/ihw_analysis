@@ -1,0 +1,32 @@
+<div class="container">
+    <header>
+        <h1>{{ county_name }} County <span class="badge">Market Analysis</span></h1>
+        <a href="/county/{{ county_name }}/export-all" class="btn-pdf-footer" style="position:static;">
+            📦 Download All {{ total_count }} Prospectuses (.zip)
+        </a>
+    </header>
+
+    <table class="generator-table" style="margin-top: 30px;">
+        <thead>
+            <tr>
+                <th>Site Name</th>
+                <th>SWR #</th>
+                <th>Annual Tonnage</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fac in facilities %}
+            <tr>
+                <td><strong>{{ fac.facility_site_name }}</strong></td>
+                <td>{{ fac.swr_num_txt }}</td>
+                <td style="color: var(--primary-green);">{{ "{:,.0f}".format(fac.total_tons) }}</td>
+                <td>
+                    <a href="/prospectus/{{ fac.swr_num_txt }}" class="badge" style="text-decoration:none;">View</a>
+                    <a href="/prospectus/{{ fac.swr_num_txt }}/pdf" style="margin-left:10px;">PDF</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

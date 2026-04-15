@@ -1,0 +1,246 @@
+/* 1. Base Variables & 2026 Aesthetic */
+:root {
+    --bg-dark: #0a0e14;
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --border-glass: rgba(255, 255, 255, 0.1);
+    --primary-green: #00ff88;
+    --warning-red: #ff4d4d;
+    --accent-blue: #00d2ff;
+    --text-main: #e0e0e0;
+    --text-muted: #a0a0a0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Inter', -apple-system, sans-serif;
+    margin: 0;
+    padding: 40px;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* 2. Header & Hero Section */
+header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--accent-blue);
+    padding-bottom: 10px;
+    margin-bottom: 40px;
+}
+
+.logo {
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--accent-blue);
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+}
+
+.hero p {
+    color: var(--text-muted);
+}
+
+/* 3. Grid & Cards (ROI/Suitability) */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.card {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 25px;
+}
+
+.radius-selector {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-glass);
+    color: var(--accent-blue);
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    outline: none;
+}
+
+.radius-selector option {
+    background: var(--bg-dark);
+    color: white;
+}
+
+.score-value, .roi-value {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary-green);
+    margin: 10px 0;
+}
+
+.badge {
+    background: rgba(0, 255, 136, 0.15);
+    color: var(--primary-green);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+/* 4. Comparison Table (The Value Flip) */
+.market-comparison {
+    margin-top: 40px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-glass);
+}
+
+th {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.negative { color: var(--warning-red); }
+.positive { color: var(--primary-green); }
+.highlight { background: rgba(0, 210, 255, 0.05); font-size: 1.1rem; }
+
+/* 5. Profitability Gauge (From previous step) */
+.gauge-track {
+    height: 12px;
+    background: #222;
+    border-radius: 6px;
+    margin: 20px 0;
+}
+.gauge-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--warning-red), var(--primary-green));
+    border-radius: 6px;
+    box-shadow: 0 0 10px var(--primary-green);
+}
+
+/* 6. Competitor Grid */
+.competitor-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.comp-metric {
+    background: rgba(255,255,255,0.02);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.comp-metric span { display: block; font-size: 0.75rem; color: var(--text-muted); }
+.comp-metric strong { font-size: 1.1rem; }
+
+.esg-badge-container {
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 210, 255, 0.1));
+    border: 1px solid var(--primary-green);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.esg-icon {
+    font-size: 2.5rem;
+    filter: drop-shadow(0 0 10px var(--primary-green));
+}
+
+.esg-text h4 {
+    margin: 0;
+    color: var(--primary-green);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.esg-stat {
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+/* 7. Print Settings (Critical for "Save as PDF") */
+@media print {
+    body { background-color: white; color: black; padding: 0; }
+    .no-print { display: none; }
+    .card, table, .gauge-container {
+        border: 1px solid #ccc !important;
+        background: none !important;
+        box-shadow: none !important;
+        color: black !important;
+    }
+    .gauge-fill { background: #444 !important; }
+}
+
+/* Floating Footer Container */
+.footer-actions {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 0;
+    background: linear-gradient(to top, rgba(10, 14, 20, 0.95), rgba(10, 14, 20, 0));
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* Centered PDF Button */
+.btn-pdf-footer {
+    background: var(--accent-blue);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 50px; /* Pill shape */
+    text-decoration: none;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 20px rgba(0, 210, 255, 0.3);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-pdf-footer:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 210, 255, 0.5);
+    background: #00b8e6;
+}
+
+/* Ensure content doesn't get hidden behind the floating footer */
+body {
+    padding-bottom: 100px; 
+}
+
+/* Hide from the actual PDF print-out */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+}

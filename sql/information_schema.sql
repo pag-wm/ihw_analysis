@@ -1,0 +1,1 @@
+select * from information_schema.columns where table_name = 'nor_facilities' order by ordinal_position;

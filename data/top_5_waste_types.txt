@@ -1,0 +1,9 @@
+                                                                                 wst_desc_txt                                                                                  | total_tons  | facility_count 
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------+----------------
+ Industrial wastewater with low organic compounds.                                                                                                                             | 14532253.00 |              1
+ Sour water.  Generated as byproduct of refining process.  Refinery historical waste.                                                                                          | 13557479.80 |              1
+ Boi-San 2 Stream to Gulf Coast Waste Athority, of Inorganic liquid, wastewater containing organics, trace metals and trace oil from the effluent treatment area for the plant | 10270768.00 |              1
+ Class 1 Wastewater generated throughout the site that is pretreated beforebeing sent for final off site treatement / disposal.                                                |  7783512.00 |              1
+ Wastewater generated from process units.                                                                                                                                      |  6550062.61 |              1
+(5 rows)
+

@@ -1,0 +1,14 @@
+ swr_num_txt |                 facility_site_name                 |         tons          
+-------------+----------------------------------------------------+-----------------------
+ 30129       | UNION CARBIDE SEADRIFT PLANT                       | 97491380.554500000000
+ 30137       | EASTMAN CHEMICAL                                   | 18270893.766000000000
+ 30092       | HOUSTON REFINING                                   | 16210471.194500000000
+ 30022       | CELANESE CLEAR LAKE PLANT                          | 13836232.248500000000
+ 30139       | BLANCHARD REFINING GALVESTON BAY REFINERY          | 13595471.262905000000
+ 30138       | ASCEND PERFORMANCE MATERIALS CHOCOLATE BAYOU PLANT | 11557020.737500000000
+ 87449       | INV NYLON CHEMICALS AMERICAS VICTORIA SITE         |  8843052.376600000000
+ 30871       | VALERO MCKEE PLANT                                 |  8106741.503200000000
+ 30689       | UNION CARBIDE TEXAS CITY                           |  7882516.953000000000
+ 38073       | INEOS OXIDE BAYPORT EO PLANT                       |  6550488.092000000000
+(10 rows)
+

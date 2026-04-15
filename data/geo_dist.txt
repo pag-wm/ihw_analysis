@@ -1,0 +1,14 @@
+ re_phys_loc_addr_county | facility_count | total_tons_2024 
+-------------------------+----------------+-----------------
+ LEE                     |              8 |      8499709.48
+ FREESTONE               |            131 |      4860348.39
+ TRAVIS                  |            298 |      2815682.96
+ BEXAR                   |            588 |      2594264.93
+ BRAZOS                  |             75 |      2069012.70
+ FAYETTE                 |             27 |       652258.74
+ GUADALUPE               |             49 |       523165.27
+ BURLESON                |             29 |       356448.54
+ CALDWELL                |             28 |       317731.03
+ BELL                    |            101 |       271229.55
+(10 rows)
+
