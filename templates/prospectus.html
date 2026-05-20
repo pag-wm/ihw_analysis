@@ -100,6 +100,15 @@
             </div>
         </div>
 
+        <div class="suitability-container">
+            <span class="badge 
+                {% if suitability >= 80 %}badge-high
+                {% elif suitability >= 50 %}badge-mid
+                {% else %}badge-low{% endif %}">
+                Suitability Score: {{ suitability }}/100
+            </span>
+        </div>
+
         <div class="comp-metric">
             <span>Market Saturation</span>
             <strong style="color: {{ saturation_color }};">{{ saturation_level }}</strong>
@@ -137,10 +146,38 @@
             </table>
         </section>
 
+        <section class="competitors-section">
+            <h2>Market Saturation (15 Mile Radius)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Company Name</th>
+                        <th>Distance (mi)</th>
+                        <th>Permit Type</th>
+                        <th>Suitability</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for comp in competitors %}
+                    <tr>
+                        <td>{{ comp.company_name }}</td>
+                        <td>{{ comp.distance }} miles</td>
+                        <td>{{ comp.permit_type }}</td>
+                        <td>{{ comp.suitability_score }}%</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4">No immediate competitors found within 15 miles.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
         <div class="footer-actions no-print">
-            <a href="/prospectus/{{ site.swr_num_txt }}/pdf?radius={{ current_radius }}" class="btn-pdf-footer">
-                📥 Download Investment Prospectus (PDF)
-            </a>
+            {% if not is_pdf %}
+            <a href="/prospectus/{{ site.swr_num_txt }}/pdf" class="btn">Download Investment Prospectus (PDF)</a>
+            {% endif %}
         </div>
     </div>
 </body>

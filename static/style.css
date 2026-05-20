@@ -1,6 +1,7 @@
 /* 1. Base Variables & 2026 Aesthetic */
 :root {
     --bg-dark: #0a0e14;
+    --dark-bg: #0a0e14;
     --card-bg: rgba(255, 255, 255, 0.03);
     --border-glass: rgba(255, 255, 255, 0.1);
     --primary-green: #00ff88;
@@ -56,6 +57,29 @@ header {
     margin-top: 30px;
 }
 
+.search-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.search-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease;
+}
+
+.search-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-blue);
+}
+
+.accent { color: var(--accent-blue); }
+
 .card {
     background: var(--card-bg);
     backdrop-filter: blur(10px);
@@ -94,6 +118,12 @@ header {
     font-size: 0.8rem;
     text-transform: uppercase;
 }
+
+.badge-high { background: #00ff8822; color: #00ff88; border: 1px solid #00ff88; }
+
+.badge-mid { background: #ffcc0022; color: #ffcc00; border: 1px solid #ffcc00; }
+
+.badge-low { background: #ff444422; color: #ff4444; border: 1px solid #ff4444; }
 
 /* 4. Comparison Table (The Value Flip) */
 .market-comparison {

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste Stream Repository | Commercial Intelligence Portal</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Global CSS Stylesheet -->
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            background-color: #0b0f19;
+            color: #f3f4f6;
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glow-button {
+            transition: all 0.3s ease;
+        }
+        .glow-button:hover {
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between font-sans">
+
+    <!-- Header Navigation -->
+    <header class="border-b border-gray-800 glass-panel sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-emerald-600/20 text-emerald-400 p-2 rounded-lg border border-emerald-500/30">
+                    <i class="fa-solid fa-compass-drafting text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-tight text-white font-sans">Waste Stream Repository</h1>
+                    <p class="text-xs text-gray-400">Q2 2026 TCEQ Market Intelligence Platform</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="/address-search" class="text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition">
+                    <i class="fa-solid fa-map-location-dot mr-1.5"></i>Map Lookup
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Body -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-12">
+        
+        <!-- Hero Branding Section -->
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-full text-xs font-semibold tracking-wider uppercase border border-emerald-500/20">
+                TCEQ Environmental Data Core
+            </span>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white mt-4 tracking-tight leading-none">
+                Industrial Waste Stream <br class="hidden sm:inline">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Commercial Intelligence</span>
+            </h2>
+            <p class="text-lg text-gray-400 mt-6 leading-relaxed">
+                Unlock physical waste logistics, feedstock volumes, and competitive saturation analytics across Texas using direct SWR regulatory tracking or spatial address geocoding.
+            </p>
+        </div>
+
+        <!-- Dynamic Query Modules Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+            
+            <!-- Module 1: Spatial Address Search (The New Feature) -->
+            <div class="glass-panel p-8 rounded-3xl relative overflow-hidden flex flex-col justify-between group hover:border-emerald-500/30 transition-all duration-300">
+                <!-- Visual highlight gradient -->
+                <div class="absolute -top-12 -right-12 h-32 w-32 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-all duration-300"></div>
+                
+                <div>
+                    <div class="bg-emerald-600/20 text-emerald-400 h-12 w-12 rounded-2xl border border-emerald-500/30 flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-map-location-dot text-xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Address Feedstock Finder</h3>
+                    <p class="text-sm text-gray-400 mb-6 leading-relaxed">
+                        Input an address, city, or zip code. The spatial geocoder automatically resolves coordinates and returns the types, tons, and consistency frequency of feedstock available in that radius.
+                    </p>
+                </div>
+
+                <form action="/address-search" method="GET" class="space-y-4">
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                            <i class="fa-solid fa-location-crosshairs"></i>
+                        </span>
+                        <input type="text" name="address" placeholder="e.g., 12000 Lawndale Houston, TX" required
+                            class="w-full pl-10 pr-4 py-3 bg-gray-950/60 border border-gray-800 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition">
+                    </div>
+                    
+                    <div class="flex space-x-4">
+                        <div class="w-1/2 relative">
+                            <select name="radius" class="w-full px-3 py-3 bg-gray-950/60 border border-gray-800 rounded-xl text-white focus:outline-none focus:border-emerald-500 transition text-sm">
+                                <option value="5">5 Mile Radius</option>
+                                <option value="15" selected>15 Mile Radius</option>
+                                <option value="25">25 Mile Radius</option>
+                                <option value="50">50 Mile Radius</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="w-1/2 glow-button py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-sm transition-all shadow-lg shadow-emerald-950/40">
+                            Analyze Radius <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Module 2: Direct SWR Lookup -->
+            <div class="glass-panel p-8 rounded-3xl relative overflow-hidden flex flex-col justify-between group hover:border-cyan-500/30 transition-all duration-300">
+                <!-- Visual highlight gradient -->
+                <div class="absolute -top-12 -right-12 h-32 w-32 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition-all duration-300"></div>
+
+                <div>
+                    <div class="bg-cyan-600/20 text-cyan-400 h-12 w-12 rounded-2xl border border-cyan-500/30 flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-magnifying-glass text-xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Direct SWR Site Lookup</h3>
+                    <p class="text-sm text-gray-400 mb-6 leading-relaxed">
+                        Direct lookup of active Texas industrial facilities using their 5-digit State Waste Registration (SWR) identifier. Pulls up complete ROI prospectus models, payback indices, and competitor maps.
+                    </p>
+                </div>
+
+                <form action="/search" method="GET" class="space-y-4">
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                            <i class="fa-solid fa-barcode"></i>
+                        </span>
+                        <input type="text" name="swr" placeholder="Enter 5-digit SWR (e.g., 30092)" required pattern="[0-9]{5}" title="Please enter a valid 5-digit SWR number."
+                            class="w-full pl-10 pr-4 py-3 bg-gray-950/60 border border-gray-800 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition">
+                    </div>
+                    
+                    <button type="submit" class="w-full py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-xl text-sm transition-all shadow-lg shadow-cyan-950/40">
+                        Generate Prospectus <i class="fa-solid fa-circle-arrow-right ml-1"></i>
+                    </button>
+                </form>
+            </div>
+
+        </div>
+
+        <!-- Regional Hotspots Shortcut -->
+        <div class="mb-16">
+            <h3 class="text-xl font-bold text-white mb-6 flex items-center">
+                <i class="fa-solid fa-fire text-amber-500 mr-2"></i>Texas Regional Industrial Hotspots
+            </h3>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- Harris County -->
+                <a href="/county/HARRIS" class="glass-panel p-5 rounded-2xl hover:border-emerald-500/30 transition-all duration-300 group">
+                    <span class="text-xs text-emerald-400 font-semibold group-hover:underline">Houston Area</span>
+                    <h4 class="text-lg font-bold text-white mt-1">Harris County</h4>
+                    <p class="text-xs text-gray-400 mt-2"><i class="fa-solid fa-industry mr-1.5 text-gray-600"></i>Active Generators</p>
+                </a>
+
+                <!-- Jefferson County -->
+                <a href="/county/JEFFERSON" class="glass-panel p-5 rounded-2xl hover:border-emerald-500/30 transition-all duration-300 group">
+                    <span class="text-xs text-emerald-400 font-semibold group-hover:underline">Beaumont / Port Arthur</span>
+                    <h4 class="text-lg font-bold text-white mt-1">Jefferson County</h4>
+                    <p class="text-xs text-gray-400 mt-2"><i class="fa-solid fa-industry mr-1.5 text-gray-600"></i>Refinery Cluster</p>
+                </a>
+
+                <!-- Nueces County -->
+                <a href="/county/NUECES" class="glass-panel p-5 rounded-2xl hover:border-emerald-500/30 transition-all duration-300 group">
+                    <span class="text-xs text-emerald-400 font-semibold group-hover:underline">Corpus Christi Bay</span>
+                    <h4 class="text-lg font-bold text-white mt-1">Nueces County</h4>
+                    <p class="text-xs text-gray-400 mt-2"><i class="fa-solid fa-industry mr-1.5 text-gray-600"></i>Coastal Terminals</p>
+                </a>
+
+                <!-- Dallas County -->
+                <a href="/county/DALLAS" class="glass-panel p-5 rounded-2xl hover:border-emerald-500/30 transition-all duration-300 group">
+                    <span class="text-xs text-emerald-400 font-semibold group-hover:underline">North Texas Hub</span>
+                    <h4 class="text-lg font-bold text-white mt-1">Dallas County</h4>
+                    <p class="text-xs text-gray-400 mt-2"><i class="fa-solid fa-industry mr-1.5 text-gray-600"></i>Manufacturing Nodes</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- System Stats / Pitch Block -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="p-6 bg-gray-900/40 rounded-2xl border border-gray-800/60">
+                <div class="text-emerald-400 text-lg mb-2"><i class="fa-solid fa-database"></i></div>
+                <h5 class="text-white font-bold">100% TCEQ Compliance</h5>
+                <p class="text-xs text-gray-400 mt-1 leading-relaxed">Direct imports of Notice of Registration and Annual Waste Summary records ensuring perfect alignment with active permits.</p>
+            </div>
+            <div class="p-6 bg-gray-900/40 rounded-2xl border border-gray-800/60">
+                <div class="text-emerald-400 text-lg mb-2"><i class="fa-solid fa-location-arrow"></i></div>
+                <h5 class="text-white font-bold">Spatial Proximity Engine</h5>
+                <p class="text-xs text-gray-400 mt-1 leading-relaxed">Built-in high-speed Haversine distance equations accurately plot competitor saturation inside strict commercial corridors.</p>
+            </div>
+            <div class="p-6 bg-gray-900/40 rounded-2xl border border-gray-800/60">
+                <div class="text-emerald-400 text-lg mb-2"><i class="fa-solid fa-wallet"></i></div>
+                <h5 class="text-white font-bold">Financial Modeling</h5>
+                <p class="text-xs text-gray-400 mt-1 leading-relaxed">Instantly translates complex tons, rates, and CAPEX metrics into clean payback schedules and ROI projections.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 bg-gray-950 py-6 text-center text-xs text-gray-500">
+        <p>&copy; 2026 Waste Stream Repository. All rights reserved. TCEQ Environmental Compliance Platform.</p>
+    </footer>
+
+</body>
+</html>

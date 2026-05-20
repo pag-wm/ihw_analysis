@@ -1,32 +1,179 @@
-<div class="container">
-    <header>
-        <h1>{{ county_name }} County <span class="badge">Market Analysis</span></h1>
-        <a href="/county/{{ county_name }}/export-all" class="btn-pdf-footer" style="position:static;">
-            📦 Download All {{ total_count }} Prospectuses (.zip)
-        </a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ county_name | upper }} County Analysis | Waste Stream Repository</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Global CSS Stylesheet -->
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            background-color: #0b0f19;
+            color: #f3f4f6;
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glow-button {
+            transition: all 0.3s ease;
+        }
+        .glow-button:hover {
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between font-sans">
+
+    <!-- Header Navigation -->
+    <header class="border-b border-gray-800 glass-panel sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-emerald-600/20 text-emerald-400 p-2 rounded-lg border border-emerald-500/30">
+                    <i class="fa-solid fa-compass-drafting text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-tight text-white font-sans">Waste Stream Repository</h1>
+                    <p class="text-xs text-gray-400">Q2 2026 TCEQ Market Intelligence Platform</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="/" class="text-sm font-semibold text-gray-400 hover:text-white transition">
+                    <i class="fa-solid fa-arrow-left mr-1.5"></i>Back to Dashboard
+                </a>
+            </div>
+        </div>
     </header>
 
-    <table class="generator-table" style="margin-top: 30px;">
-        <thead>
-            <tr>
-                <th>Site Name</th>
-                <th>SWR #</th>
-                <th>Annual Tonnage</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for fac in facilities %}
-            <tr>
-                <td><strong>{{ fac.facility_site_name }}</strong></td>
-                <td>{{ fac.swr_num_txt }}</td>
-                <td style="color: var(--primary-green);">{{ "{:,.0f}".format(fac.total_tons) }}</td>
-                <td>
-                    <a href="/prospectus/{{ fac.swr_num_txt }}" class="badge" style="text-decoration:none;">View</a>
-                    <a href="/prospectus/{{ fac.swr_num_txt }}/pdf" style="margin-left:10px;">PDF</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+    <!-- Main Content Body -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-12">
+        
+        <!-- County Hero Section -->
+        <div class="glass-panel p-8 rounded-3xl mb-8 relative overflow-hidden group">
+            <div class="absolute -top-12 -right-12 h-32 w-32 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-all duration-300"></div>
+            
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div>
+                    <span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-full text-xs font-semibold tracking-wider uppercase border border-emerald-500/20">
+                        Regional Market Intelligence
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-3 tracking-tight">
+                        {{ county_name | upper }} COUNTY <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Market Profile</span>
+                    </h2>
+                    <p class="text-sm text-gray-400 mt-2 max-w-xl">
+                        Comprehensive list of active hazardous waste and industrial waste stream generators registered with the TCEQ in {{ county_name | title }} County.
+                    </p>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    <a href="/county/{{ county_name }}/export-all" class="px-5 py-2.5 bg-gray-800 hover:bg-gray-700 text-white font-semibold rounded-xl text-sm transition border border-gray-700/60 flex items-center">
+                        <i class="fa-solid fa-file-zipper mr-2 text-cyan-400"></i>Export All PDFs (ZIP)
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metric Summary Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- Metric 1: Total SWR Registrations -->
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-emerald-500">
+                <p class="text-xs font-semibold uppercase tracking-wider text-gray-400">TCEQ Registered Sites</p>
+                <h3 class="text-3xl font-extrabold text-white mt-1">{{ total_count }}</h3>
+                <p class="text-xs text-gray-500 mt-2"><i class="fa-solid fa-industry mr-1.5 text-emerald-400"></i>Active industrial waste accounts</p>
+            </div>
+
+            <!-- Metric 2: Estimated Regional Tonnage -->
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-cyan-500">
+                <p class="text-xs font-semibold uppercase tracking-wider text-gray-400">County Waste Profile</p>
+                <h3 class="text-3xl font-extrabold text-white mt-1">High Volume</h3>
+                <p class="text-xs text-gray-500 mt-2"><i class="fa-solid fa-chart-line mr-1.5 text-cyan-400"></i>Ranked by historical annual summaries</p>
+            </div>
+
+            <!-- Metric 3: Diversion Suitability Guidance -->
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-indigo-500">
+                <p class="text-xs font-semibold uppercase tracking-wider text-gray-400">Recycling Potential</p>
+                <h3 class="text-3xl font-extrabold text-white mt-1">Pyrolysis Prime</h3>
+                <p class="text-xs text-gray-500 mt-2"><i class="fa-solid fa-flask mr-1.5 text-indigo-400"></i>Top tech: Polymer chemical recovery</p>
+            </div>
+        </div>
+
+        <!-- Facilities Inventory Table -->
+        <div class="glass-panel rounded-2xl overflow-hidden">
+            <div class="p-6 border-b border-gray-800">
+                <h3 class="text-lg font-bold text-white">Active Generators Inventory</h3>
+                <p class="text-xs text-gray-400 mt-1">Select an active industrial plant below to run dynamic suitability algorithms, payback curves, and local competitive density mapping.</p>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-900/60 text-gray-400 text-xs font-semibold uppercase tracking-wider border-b border-gray-800">
+                            <th class="p-4">Facility Name & Identifier</th>
+                            <th class="p-4">Regulatory Region</th>
+                            <th class="p-4">Reported Waste Tons</th>
+                            <th class="p-4">Platform Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-800/50 text-sm">
+                        {% for fac in facilities %}
+                        <tr class="hover:bg-gray-800/20 transition">
+                            <!-- Facility Name and SWR Badge -->
+                            <td class="p-4">
+                                <div class="font-semibold text-white">{{ fac.facility_site_name }}</div>
+                                <div class="text-xs text-gray-400 flex items-center mt-1">
+                                    <span class="bg-gray-800 px-2.5 py-0.5 rounded-md border border-gray-700/80 mr-2 text-emerald-400 font-mono text-xs">
+                                        SWR {{ fac.swr_num_txt }}
+                                    </span>
+                                    <span>TCEQ Registered Generator</span>
+                                </div>
+                            </td>
+                            
+                            <!-- State waste registration scale / region classification -->
+                            <td class="p-4 text-gray-300">
+                                <div class="flex items-center space-x-2">
+                                    <span class="h-2 w-2 rounded-full bg-cyan-400"></span>
+                                    <span class="text-xs">Gulf Coast Region 12</span>
+                                </div>
+                            </td>
+
+                            <!-- Reported Annual Tons -->
+                            <td class="p-4">
+                                <div class="font-bold text-white text-base">
+                                    {{ "%.1f"|format(fac.total_tons) }} <span class="text-xs font-normal text-gray-400">Tons / Yr</span>
+                                </div>
+                            </td>
+
+                            <!-- Action button to see deep prospectus analysis -->
+                            <td class="p-4">
+                                <a href="/facility/{{ fac.swr_num_txt }}" class="inline-flex items-center justify-center px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-xs transition glow-button shadow-lg shadow-emerald-950/40">
+                                    <i class="fa-solid fa-chart-pie mr-2"></i>Analyze Site Prospectus
+                                </a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4" class="p-8 text-center text-gray-500">
+                                <i class="fa-solid fa-circle-exclamation text-3xl mb-3 text-gray-700"></i>
+                                <p class="text-base">No active waste generators registered with positive tonnage in {{ county_name | title }} County.</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 bg-gray-950 py-6 text-center text-xs text-gray-500">
+        <p>&copy; 2026 Waste Stream Repository. All rights reserved. TCEQ Environmental Compliance Platform.</p>
+    </footer>
+
+</body>
+</html>

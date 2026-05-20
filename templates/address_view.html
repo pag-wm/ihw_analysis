@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Address Waste Stream Query | Waste Stream Repository</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Global CSS Stylesheet -->
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            background-color: #0b0f19;
+            color: #f3f4f6;
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glow-button {
+            transition: all 0.3s ease;
+        }
+        .glow-button:hover {
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between font-sans">
+
+    <!-- Header Navigation -->
+    <header class="border-b border-gray-800 glass-panel sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-emerald-600/20 text-emerald-400 p-2 rounded-lg border border-emerald-500/30">
+                    <i class="fa-solid fa-compass-drafting text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-tight text-white font-sans">Waste Stream Repository</h1>
+                    <p class="text-xs text-gray-400">Q2 2026 TCEQ Market Intelligence Platform</p>
+                </div>
+            </div>
+            <a href="/" class="text-sm font-semibold text-gray-400 hover:text-white transition">
+                <i class="fa-solid fa-arrow-left mr-2"></i>Back to Dashboard
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-12">
+        
+        <!-- Address Search Input Box -->
+        <div class="glass-panel p-8 rounded-3xl mb-8 relative overflow-hidden group">
+            <div class="absolute -top-12 -right-12 h-32 w-32 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-all duration-300"></div>
+            
+            <h2 class="text-2xl font-bold text-white mb-2 flex items-center">
+                <i class="fa-solid fa-map-location-dot text-emerald-400 mr-3"></i>Spatial Feedstock Finder
+            </h2>
+            <p class="text-sm text-gray-400 mb-6 max-w-2xl leading-relaxed">
+                Enter any valid commercial address, industrial corridor, or zip code to geocode coordinates and query registered waste stream generators within your specified transport radius.
+            </p>
+            
+            <form action="/address-search" method="GET" class="space-y-4 md:space-y-0 md:flex md:space-x-4">
+                <div class="relative flex-grow">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                        <i class="fa-solid fa-location-crosshairs text-emerald-500"></i>
+                    </span>
+                    <input type="text" name="address" value="{{ address or '' }}" placeholder="e.g., 12000 Lawndale Houston, TX" required
+                        class="w-full pl-10 pr-4 py-3 bg-gray-950/60 border border-gray-800 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition text-sm">
+                </div>
+                
+                <div class="w-full md:w-48 relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                        <i class="fa-solid fa-circle-notch text-cyan-400"></i>
+                    </span>
+                    <select name="radius" class="w-full pl-10 pr-4 py-3 bg-gray-950/60 border border-gray-800 rounded-xl text-white focus:outline-none focus:border-emerald-500 transition text-sm">
+                        <option value="5" {% if radius == 5 %}selected{% endif %}>5 Mile Radius</option>
+                        <option value="15" {% if radius == 15 or not radius %}selected{% endif %}>15 Mile Radius</option>
+                        <option value="25" {% if radius == 25 %}selected{% endif %}>25 Mile Radius</option>
+                        <option value="50" {% if radius == 50 %}selected{% endif %}>50 Mile Radius</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="w-full md:w-auto px-8 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-sm transition glow-button shadow-lg shadow-emerald-950/40">
+                    Run Spatial Analysis
+                </button>
+            </form>
+
+            {% if error %}
+            <div class="mt-4 p-4 bg-rose-500/10 border border-rose-500/20 text-rose-400 rounded-xl flex items-center text-sm">
+                <i class="fa-solid fa-triangle-exclamation mr-3 text-lg"></i>
+                {{ error }}
+            </div>
+            {% endif %}
+        </div>
+
+        {% if address and not error %}
+        <!-- Summary Cards of the Spatial Feedstock Shed -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- Resolved Coordinates -->
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-emerald-500 flex flex-col justify-between">
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-gray-400">Resolved Location</p>
+                    <h3 class="text-lg font-bold text-white mt-1.5 line-clamp-2 leading-tight" title="{{ resolved_address }}">
+                        {{ resolved_address }}
+                    </h3>
+                </div>
+                <p class="text-xs text-gray-500 mt-3"><i class="fa-solid fa-globe mr-1.5 text-emerald-400"></i> Lat: {{ "%.4f"|format(lat) }} / Lon: {{ "%.4f"|format(lon) }}</p>
+            </div>
+
+            <!-- Spatial Feedstock Shed -->
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-cyan-500 flex flex-col justify-between">
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-gray-400">Spatial Feedstock Shed</p>
+                    <h3 class="text-3xl font-extrabold text-white mt-1.5">{{ total_tons }} <span class="text-lg font-normal text-gray-400">Tons</span></h3>
+                </div>
+                <p class="text-xs text-gray-500 mt-3"><i class="fa-solid fa-chart-pie mr-1.5 text-cyan-400"></i> Sum of all active waste streams in {{ radius }} mi</p>
+            </div>
+
+            <!-- Active Unique Streams -->
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-indigo-500 flex flex-col justify-between">
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-gray-400">Active Waste Streams</p>
+                    <h3 class="text-3xl font-extrabold text-white mt-1.5">{{ streams|length }} <span class="text-lg font-normal text-gray-400">Unique Streams</span></h3>
+                </div>
+                <p class="text-xs text-gray-500 mt-3"><i class="fa-solid fa-repeat mr-1.5 text-indigo-400"></i> Tracked over continuous history</p>
+            </div>
+        </div>
+
+        <!-- Waste Stream Results Grid -->
+        <div class="glass-panel rounded-2xl overflow-hidden">
+            <div class="p-6 border-b border-gray-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-lg font-bold text-white">Waste Production Inventory</h3>
+                    <p class="text-xs text-gray-400 mt-1">Listing registered facilities and individual waste streams inside the target supply buffer, sorted by proximity</p>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-900/60 text-gray-400 text-xs font-semibold uppercase tracking-wider border-b border-gray-800">
+                            <th class="p-4">Facility & Proximity</th>
+                            <th class="p-4">Waste Code</th>
+                            <th class="p-4">Stream Classification</th>
+                            <th class="p-4">Annual Tonnage</th>
+                            <th class="p-4">Production Frequency</th>
+                            <th class="p-4">Years Active</th>
+                            <th class="p-4 text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-800/50 text-sm">
+                        {% for stream in streams %}
+                        <tr class="hover:bg-gray-800/20 transition">
+                            <!-- Facility details & distance -->
+                            <td class="p-4">
+                                <div class="font-semibold text-white">{{ stream.facility_name }}</div>
+                                <div class="text-xs text-gray-400 flex items-center mt-1.5">
+                                    <span class="bg-gray-800 px-2 py-0.5 rounded mr-2 border border-gray-700/80 text-emerald-400 font-mono text-xs">
+                                        SWR {{ stream.swr }}
+                                    </span>
+                                    <span><i class="fa-solid fa-location-dot mr-1.5 text-cyan-400"></i>{{ stream.distance }} miles</span>
+                                </div>
+                            </td>
+                            <!-- Waste Code -->
+                            <td class="p-4 font-mono font-bold text-cyan-400">
+                                {{ stream.waste_code }}
+                            </td>
+                            <!-- Stream Type Classification -->
+                            <td class="p-4">
+                                <span class="px-2.5 py-1 rounded-full text-xs font-semibold 
+                                    {% if 'Hazardous' in stream.waste_type %}
+                                        bg-rose-500/10 text-rose-400 border border-rose-500/20
+                                    {% else %}
+                                        bg-amber-500/10 text-amber-400 border border-amber-500/20
+                                    {% endif %}">
+                                    {{ stream.waste_type }}
+                                </span>
+                            </td>
+                            <!-- Amount Generated -->
+                            <td class="p-4 font-bold text-white text-base">
+                                {{ "%.2f"|format(stream.amount_tons) }} <span class="text-xs font-normal text-gray-400">Tons</span>
+                            </td>
+                            <!-- Production Frequency -->
+                            <td class="p-4">
+                                <div class="flex items-center space-x-2">
+                                    <span class="h-2 w-2 rounded-full 
+                                        {% if 'Continuous' in stream.frequency %}
+                                            bg-emerald-500 animate-pulse
+                                        {% elif 'Periodic' in stream.frequency %}
+                                            bg-amber-500
+                                        {% else %}
+                                            bg-cyan-500
+                                        {% endif %}"></span>
+                                    <span class="font-medium text-gray-300">{{ stream.frequency }}</span>
+                                </div>
+                            </td>
+                            <!-- Historical years active -->
+                            <td class="p-4">
+                                <div class="flex flex-wrap gap-1 max-w-xs">
+                                    {% for yr in stream.years_reported %}
+                                    <span class="bg-gray-800 text-gray-400 text-xs px-1.5 py-0.5 rounded border border-gray-700/50">{{ yr }}</span>
+                                    {% endfor %}
+                                </div>
+                            </td>
+                            <!-- Action button to see deep Prospectus analysis -->
+                            <td class="p-4 text-center">
+                                <a href="/facility/{{ stream.swr }}" class="inline-flex items-center justify-center px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-xs transition glow-button shadow-lg shadow-emerald-950/40">
+                                    <i class="fa-solid fa-chart-line mr-1.5"></i>Analyze Site
+                                </a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="7" class="p-8 text-center text-gray-500">
+                                <i class="fa-solid fa-circle-exclamation text-3xl mb-3 text-gray-700"></i>
+                                <p class="text-base">No active waste streams registered within {{ radius }} miles of this address.</p>
+                                <p class="text-xs text-gray-600 mt-1">Try entering a major Texas industrial area (e.g., Pasadena, TX or Port Arthur, TX).</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% else %}
+        <!-- Empty Landing Search State -->
+        <div class="glass-panel py-20 px-4 rounded-3xl text-center">
+            <div class="bg-emerald-500/10 text-emerald-400 h-16 w-16 rounded-2xl border border-emerald-500/20 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-emerald-950/20">
+                <i class="fa-solid fa-magnifying-glass-location text-2xl animate-pulse"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white">Spatial Analysis Engine Ready</h3>
+            <p class="text-sm text-gray-400 max-w-md mx-auto mt-2">Enter any valid address, industrial plant, or postal code above to geocode and inspect feedstock streams across our database.</p>
+        </div>
+        {% endif %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 bg-gray-950 py-6 text-center text-xs text-gray-500">
+        <p>&copy; 2026 Waste Stream Repository. All rights reserved. TCEQ Environmental Compliance Platform.</p>
+    </footer>
+
+</body>
+</html>
