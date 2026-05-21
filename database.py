@@ -1,26 +1,21 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
 import os
-from dotenv import load_dotenv
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 
-# Load environment variables from .env file
-load_dotenv()
-
-# Get the database URL from environment variables
-# For local demo: postgresql://postgres:password@localhost:5432/ihw_db
+# 1. Fetch the live environment variable injected by Cloud Run
 DATABASE_URL = os.getenv("DATABASE_URL")
 
+# 2. Add an explicit defensive fallback/error trap
 if not DATABASE_URL:
-    raise ValueError("DATABASE_URL environment variable is not set. Check your .env file.")
+    raise ValueError("CRITICAL ERROR: The DATABASE_URL environment variable is completely empty!")
 
-# Create the SQLAlchemy engine
+if "[DATABASE_NAME]" in DATABASE_URL:
+    raise ValueError(f"CRITICAL ERROR: Code is reading a placeholder string! Current string value is: {DATABASE_URL}")
+
+# 3. Create the engine dynamically
 engine = create_engine(DATABASE_URL)
-
-# Configure the session factory
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-# Base class for our models to inherit from
 Base = declarative_base()
 
 def get_db():
