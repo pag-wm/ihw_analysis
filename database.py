@@ -1,7 +1,11 @@
 import os
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+
+# Force load the .env file into system environment variables immediately
+load_dotenv()
 
 # 1. Fetch the live environment variable injected by Cloud Run
 DATABASE_URL = os.getenv("DATABASE_URL")
